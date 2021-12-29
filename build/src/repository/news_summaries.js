@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectNewsSummaries = void 0;
+exports.readNewsSummaries = exports.selectNewsSummaries = void 0;
 const tslib_1 = require("tslib");
 const db_1 = require("../db");
 const selectNewsSummaries = (newsNumber) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
@@ -25,4 +25,8 @@ const selectNewsSummaries = (newsNumber) => (0, tslib_1.__awaiter)(void 0, void 
     }
 });
 exports.selectNewsSummaries = selectNewsSummaries;
+const readNewsSummaries = (newsNumber) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+    yield db_1.pool.query('UPDATE news_summaries SET news_read = true WHERE news_source_url IN (SELECT news_source_url FROM news_summaries WHERE news_read = false ORDER BY url_hash ASC LIMIT $1)', [newsNumber]);
+});
+exports.readNewsSummaries = readNewsSummaries;
 //# sourceMappingURL=news_summaries.js.map

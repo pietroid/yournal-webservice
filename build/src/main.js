@@ -14,5 +14,20 @@ app.get('/news/summaries', function (req, res) {
         res.send({ newsSummaries: newsSummaries });
     });
 });
+app.patch('/news/summaries/read', function (req, res) {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        const news_number = req.query.news_number;
+        if (!news_number)
+            res.sendStatus(400);
+        try {
+            yield (0, news_summaries_1.readNewsSummaries)(news_number);
+            res.sendStatus(200);
+        }
+        catch (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+    });
+});
 app.listen(3000);
 //# sourceMappingURL=main.js.map

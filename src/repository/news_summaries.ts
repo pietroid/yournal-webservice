@@ -34,3 +34,7 @@ export const selectNewsSummaries = async (newsNumber: number): Promise<NewsSumma
         return [];
     }
 }
+
+export const readNewsSummaries = async (newsNumber: number): Promise<void> => {
+    await pool.query('UPDATE news_summaries SET news_read = true WHERE news_source_url IN (SELECT news_source_url FROM news_summaries WHERE news_read = false ORDER BY url_hash ASC LIMIT $1)', [newsNumber]);
+}
